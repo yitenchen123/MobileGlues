@@ -1,0 +1,50 @@
+name: Build iOS Plugin
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  build-ios:
+    name: Build iOS dylib + .air2plugin
+    runs-on: macos-15
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: 环境信息
+        run: |
+          xcodebuild -version
+          xcrun --sdk iphoneos --show-sdk-version
+          cmake --version | head -1
+
+      - name: 构建 iOS arm64
+        run: |
+          chmod +x build-ios.sh
+          ./build-ios.sh --package
+
+      - name: 检查产物
+        run: |
+          ls -lh plugin/libs/
+          lipo -info plugin/libs/*.dylib 2>/dev/null || echo "(无 dylib)"
+          ls -lh *.air2plugin 2>/dev/null || echo "(无插件包)"
+
+      - name: 上传 dylib
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: libMobileGlues-ios
+          path: plugin/libs/*.dylib
+          if-no-files-found: warn
+
+      - name: 上传插件包
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: MobileGlues-air2plugin
+          path: '*.air2plugin'
+          if-no-files-found: warn
