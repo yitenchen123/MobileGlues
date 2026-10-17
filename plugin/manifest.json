@@ -8,7 +8,8 @@
   "homepage": "https://github.com/MobileGL-Dev/MobileGlues",
 
   "rendererGLPath": "libs/libMobileGlues.dylib",
-  "rendererEGLPath": "libs/libMobileGlues.dylib",
+  "rendererEGLPath": "",
+  "libraryLayout": "combined",
 
   "minMCVer": "1.17",
 
