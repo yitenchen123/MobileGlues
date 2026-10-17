@@ -1,0 +1,48 @@
+{
+  "formatVersion": 1,
+  "rendererId": "com.airdevs.mobileglues",
+  "displayName": "MobileGlues",
+  "description": "Metal 原生 GL 转译，性能最优",
+  "version": "1.0.0",
+  "author": "Air-Devs",
+  "homepage": "https://github.com/MobileGL-Dev/MobileGlues",
+
+  "rendererGLPath": "libs/libMobileGlues.dylib",
+  "rendererEGLPath": "libs/libMobileGlues.dylib",
+
+  "minMCVer": "1.17",
+
+  "env": [
+    {
+      "type": "ToggleableEnv",
+      "key": "MG_DEBUG",
+      "value": "1",
+      "title": "调试日志",
+      "toggle": false
+    },
+    {
+      "type": "SelectableEnv",
+      "key": "MG_PRECISION",
+      "title": "着色器精度",
+      "items": {
+        "defaultValue": "highp",
+        "values": [
+          { "value": "highp", "label": "高精度（画质优先）" },
+          { "value": "mediump", "label": "中精度（性能优先）" }
+        ]
+      }
+    },
+    {
+      "type": "CustomizableEnv",
+      "key": "MG_SHADER_CACHE_SIZE",
+      "title": "着色器缓存大小",
+      "defaultValue": "512M"
+    }
+  ],
+
+  "ios": {
+    "minSystemVersion": "14.0",
+    "requiresJIT": false,
+    "notes": "需要 Metal 支持的设备（A7 及以上）"
+  }
+}
